@@ -15,6 +15,12 @@ group :development do
   gem 'sqlite3'
 end
 
+group :test do
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'capybara'
+  gem 'factory_girl', '~> 4.0'
+end
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -23,6 +29,11 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+
+# Added for the application
+gem 'devise'
+gem 'figaro', '1.0'
+gem 'bootstrap-sass', '~> 3.1.1'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
