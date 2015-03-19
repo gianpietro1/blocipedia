@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-context "validations" do
+context "when creating wikis" do
 
   before do
     @valid_title = "A title with more than five characters"
@@ -10,8 +10,8 @@ context "validations" do
     @user = create(:user)
   end
 
-  describe "title" do
-      it "allows 5 or more characters" do
+  describe "validates title" do
+      it "will allow 5 or more characters" do
         wiki = Wiki.new(title: @valid_title, body: @valid_body, user: @user)
         expect( wiki.valid? ).to eq true
 
@@ -20,8 +20,8 @@ context "validations" do
       end
   end
 
-  describe "body" do
-      it "allows 20 or more characters" do
+  describe "validate body" do
+      it "will allow 20 or more characters" do
         wiki = Wiki.new(title: @valid_title, body: @valid_body, user: @user)
         expect( wiki.valid? ).to eq true
 
@@ -30,8 +30,8 @@ context "validations" do
       end
   end
 
-  describe "user" do
-      it "should be present" do
+  describe "validate user" do
+      it "will check if present" do
         wiki = Wiki.new(title: @valid_title, body: @valid_body, user: @user)
         expect( wiki.valid? ).to eq true
 
