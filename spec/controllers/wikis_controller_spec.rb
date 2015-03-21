@@ -26,7 +26,7 @@ describe WikisController do
   describe '#destroy' do
     it "destroys a wiki for the current user" do
       wiki = create(:wiki, user: @user)
-      expect( @user.wikis ).not_to be_nil
+      expect( @user.wikis ).not_to be_empty
 
       delete :destroy, :id => wiki.id
 
