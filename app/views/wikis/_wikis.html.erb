@@ -1,0 +1,7 @@
+      <% wiki.each do |wiki| %>
+        <tr>
+          <td><%= link_to wiki.title, '#' %></td>
+          <td class="tdbuttons"><%= link_to "Edit", '#', class: 'btn btn-success'%>
+          <td class="tdbuttons"><%= link_to "Delete", '#', class: 'btn btn-danger'%>
+        </tr>
+      <% end %>

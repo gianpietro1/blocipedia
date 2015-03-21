@@ -3,7 +3,11 @@
 <div class="jumbotron">
   <p>Create and share Markdown Wikis</p>
   <p>
-    <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-primary' %>
+    <% if !current_user %>
+      <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-primary' %>
+    <% else %>
+      <%= link_to "Go to Wikis", wikis_path, class: 'btn btn-primary' %>
+    <% end %>
   </p>
 </div>
 
