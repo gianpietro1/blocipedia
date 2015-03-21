@@ -1,15 +1,41 @@
-<h1>Wikis</h1>
 <div class="row">
- <div class="col-md-6" id="public_wikis">
-    <h2>Public wikis</h2>
-      <% @wikis.each do |wiki| %>
-        <p><%= wiki.title %></p>
-      <% end %>
-  </div>
-  <div class="col-md-6" id="my_wikis">
-     <h2>My wikis</h2>
-      <% @user_wikis.each do |wiki| %>
-        <p><%= wiki.title %></p>
-      <% end %>
+  <div class="col-md-12">
+    <h2 class="text-center">Wikis</h2>
   </div>
 </div>
+
+<div class="row">
+
+ <div class="col-md-6" id="public_wikis">
+   <table class="table table-striped">
+    <th colspan="3" class="text-center">Public wikis</th>
+      <% @wikis.each do |wiki| %>
+        <tr>
+          <td><%= link_to wiki.title, '#' %></td>
+          <td class="tdbuttons"><%= link_to "Edit", '#', class: 'btn btn-success'%>
+          <td class="tdbuttons"><%= link_to "Delete", '#', class: 'btn btn-danger'%>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <div class="col-md-6" id="my_wikis">
+    <table class="table table-striped">
+     <th colspan="3" class="text-center">My wikis</th>
+      <% @user_wikis.each do |wiki| %>
+        <tr>
+          <td><%= link_to wiki.title, '#' %></td>
+          <td class="tdbuttons"><%= link_to "Edit", '#', class: 'btn btn-success'%>
+          <td class="tdbuttons"><%= link_to "Delete", '#', class: 'btn btn-danger'%>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12 text-center">
+    <%= link_to "New Wiki", '#', class: 'btn btn-success' %>
+  </div>
+</div>  
