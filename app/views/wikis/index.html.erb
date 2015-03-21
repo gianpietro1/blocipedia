@@ -1,4 +1,15 @@
-<h1>Wikis#index</h1>
-<% @wikis.each do |wiki| %>
-<p><%= wiki.title %></p>
-<% end %>
+<h1>Wikis</h1>
+<div class="row">
+ <div class="col-md-6" id="public_wikis">
+    <h2>Public wikis</h2>
+      <% @wikis.each do |wiki| %>
+        <p><%= wiki.title %></p>
+      <% end %>
+  </div>
+  <div class="col-md-6" id="my_wikis">
+     <h2>My wikis</h2>
+      <% @user_wikis.each do |wiki| %>
+        <p><%= wiki.title %></p>
+      <% end %>
+  </div>
+</div>
