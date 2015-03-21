@@ -1,5 +1,6 @@
 class WikisController < ApplicationController
   def index
+    @wikis = current_user.wikis
   end
 
   def show
@@ -12,7 +13,7 @@ class WikisController < ApplicationController
   def create
     @wiki = current_user.wikis.build(wiki_params)
     if @wiki.save
-      flash[:notice] = "Wiki was saved"
+      flash[:notice] = "Wiki was saved."
       redirect_to root_path
     else
       flash[:error] = "There was an error saving the wiki. Please try again."
@@ -21,6 +22,18 @@ class WikisController < ApplicationController
   end
 
   def edit
+    @wiki = Wiki.find(params[:id])
+  end
+
+  def update
+    @wiki = Wiki.find(params[:id])
+    if @wiki.update_attributes(wikis_params)
+      flash[:notice] = "Wiki was updated."
+      redirect_to root_path
+    else
+      flash[:error] = "There was an error updating the wiki. Please try again."
+      redirect_to root_path
+    end
   end
 
   def destroy

@@ -7,6 +7,7 @@ describe WikisController do
   before do
     @valid_title = "A title with more than five characters"
     @valid_body = "A body with more than 20 characters"
+    @updated_body = "A body with more than 20 characters, updated."
     @user = create(:user)
     sign_in @user
   end
@@ -27,9 +28,21 @@ describe WikisController do
       wiki = create(:wiki, user: @user)
       expect( @user.wikis ).not_to be_nil
 
-      delete :destroy, { id: wiki.id }
+      delete :destroy, :id => wiki.id
 
       expect( @user.wikis.find_by_id(wiki.id) ).to be_nil      
+    end
+  end
+
+  describe '#update' do
+    it "updates a wiki" do
+      wiki = create(:wiki, title: @valid_title, body: @valid_body)
+      expect( wiki.body ).to eq(@valid_body)
+
+      put :update, :id => wiki.id , :wiki => {title: @valid_title, body: @updated_body}
+      
+      wiki.reload
+      expect( wiki.body ).to eq(@updated_body)
     end
   end
 

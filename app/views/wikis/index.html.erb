@@ -1,2 +1,4 @@
 <h1>Wikis#index</h1>
-<p>Find me in app/views/wikis/index.html.erb</p>
+<% @wikis.each do |wiki| %>
+<p><%= wiki.title %></p>
+<% end %>
