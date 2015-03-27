@@ -25,3 +25,64 @@ feature 'User visits wikis' do
   end
 
 end
+
+feature 'User creates wikis' do
+ 
+  include Warden::Test::Helpers
+  Warden.test_mode!
+
+  before do
+    @user = create(:user)
+    login_as(@user, :scope => :user)
+  end
+  
+  scenario 'Successfully public' do
+    visit new_wiki_path
+    fill_in 'Title', with: 'This is a title'
+    fill_in 'Body', with: 'This is the long long long body'
+    click_button 'Save'
+    expect(page).to have_content('Wiki was saved.')
+  end
+
+end
+
+feature 'User shows wiki' do
+ 
+  include Warden::Test::Helpers
+  Warden.test_mode!
+
+  before do
+    @user = create(:user)
+    login_as(@user, :scope => :user)
+    @wiki = create(:wiki, user: @user, private: false)    
+  end
+  
+  scenario 'Successfully public' do
+    visit wiki_path(@wiki)
+    expect(page).to have_content(@wiki.title, @wiki.body)
+  end
+
+end
+
+feature 'User edits wiki' do
+ 
+  include Warden::Test::Helpers
+  Warden.test_mode!
+
+  before do
+    @user = create(:user)
+    login_as(@user, :scope => :user)
+    @wiki = create(:wiki, user: @user, private: false)    
+    @updated_body = "A body with more than 20 characters, updated."
+  end
+  
+  scenario 'Successfully public' do
+    visit edit_wiki_path(@wiki)
+    expect(page).to have_content(@wiki.body)
+    fill_in 'Body', with: @updated_body
+    click_button 'Save'
+    visit edit_wiki_path(@wiki)
+    expect(page).to have_content(@updated_body)
+  end
+
+end

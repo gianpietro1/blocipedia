@@ -1,2 +1,21 @@
-<h1>Wikis#show</h1>
-<p>Find me in app/views/wikis/show.html.erb</p>
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="text-center"><%= @wiki.title %></h2>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-8">
+    <%= @wiki.body %>
+  </div>
+  
+</div>
+
+<div class="row">
+  <p></p>
+  <div class="col-md-12">
+    <%= link_to "Back to Wikis", wikis_path, class: "btn btn-success" %></td>
+  </div>
+  
+</div>

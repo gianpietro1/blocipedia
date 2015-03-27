@@ -5,6 +5,7 @@ class WikisController < ApplicationController
    end
 
   def show
+    @wiki = Wiki.find(params[:id])
   end
 
   def new
@@ -15,10 +16,10 @@ class WikisController < ApplicationController
     @wiki = current_user.wikis.build(wiki_params)
     if @wiki.save
       flash[:notice] = "Wiki was saved."
-      redirect_to root_path
+      redirect_to wikis_path
     else
       flash[:error] = "There was an error saving the wiki. Please try again."
-      redirect_to root_path
+      render :new
     end
   end
 
@@ -30,10 +31,10 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     if @wiki.update_attributes(wiki_params)
       flash[:notice] = "Wiki was updated."
-      redirect_to root_path
+      redirect_to @wiki
     else
       flash[:error] = "There was an error updating the wiki. Please try again."
-      redirect_to root_path
+      render :edit
     end
   end
 
@@ -41,10 +42,10 @@ class WikisController < ApplicationController
    @wiki = Wiki.find(params[:id])
    if @wiki.destroy
       flash[:notice] = "Wiki was deleted successfully."
-      redirect_to root_path
+      redirect_to wikis_path
    else
       flash[:error] = "There was an error deleting the wiki."
-      redirect_to root_path
+      redirect_to wikis_path
     end
   end
 
