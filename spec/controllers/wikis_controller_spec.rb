@@ -9,6 +9,7 @@ describe WikisController do
     @valid_body = "A body with more than 20 characters"
     @updated_body = "A body with more than 20 characters, updated."
     @user = create(:user)
+    @another_user = create(:user)
     sign_in @user
   end
 
@@ -24,26 +25,56 @@ describe WikisController do
   end
 
   describe '#destroy' do
-    it "destroys a wiki for the current user" do
-      wiki = create(:wiki, user: @user)
-      expect( @user.wikis ).not_to be_empty
+    
+    context 'own wikis' do
+      it "destroys a wiki for the current user" do
+        wiki = create(:wiki, user: @user)
+        expect( @user.wikis ).not_to be_empty 
 
-      delete :destroy, :id => wiki.id
+        delete :destroy, :id => wiki.id
 
-      expect( @user.wikis.find_by_id(wiki.id) ).to be_nil      
+        expect( @user.wikis.find_by_id(wiki.id) ).to be_nil      
+      end
     end
+
+    context 'others wikis' do
+      it "can't destroy a wiki from another user" do
+        wiki = create(:wiki, user: @another_user)
+        expect( @another_user.wikis ).not_to be_empty 
+
+        delete :destroy, :id => wiki.id
+
+        expect( @another_user.wikis.find_by_id(wiki.id) ).not_to be_nil      
+      end
+    end    
+
   end
 
   describe '#update' do
-    it "updates a wiki" do
-      wiki = create(:wiki, title: @valid_title, body: @valid_body)
-      expect( wiki.body ).to eq(@valid_body)
+    context 'own wikis' do
+      it "updates a wiki" do
+        wiki = create(:wiki, title: @valid_title, body: @valid_body)
+        expect( wiki.body ).to eq(@valid_body)
 
-      put :update, :id => wiki.id , :wiki => {title: @valid_title, body: @updated_body}
-      
-      wiki.reload
-      expect( wiki.body ).to eq(@updated_body)
+        put :update, :id => wiki.id , :wiki => {title: @valid_title, body: @updated_body}
+        
+        wiki.reload
+        expect( wiki.body ).to eq(@updated_body)
+      end
     end
+
+    context 'others public wikis' do
+      it "updates a wiki" do
+        wiki = create(:wiki, title: @valid_title, body: @valid_body, user: @another_user)
+        expect( wiki.body ).to eq(@valid_body)
+
+        put :update, :id => wiki.id , :wiki => {title: @valid_title, body: @updated_body}
+        
+        wiki.reload
+        expect( wiki.body ).to eq(@updated_body)
+      end
+    end
+
   end
 
 end

@@ -40,4 +40,25 @@ context "when creating wikis" do
       end
   end
 
+  describe "validate default for private" do
+      it "will check if public" do
+        wiki = create(:wiki)
+        expect( wiki.private ).to eq false
+      end
+  end
+
+end
+
+context "when using self method" do
+
+  describe "public" do
+      it "will return true if public" do
+        wiki = create(:wiki)
+        expect( wiki.public? ).to eq true
+
+        wiki = create(:wiki, private: true)
+        expect( wiki.public? ).to eq false
+      end
+  end
+
 end
