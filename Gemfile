@@ -36,6 +36,7 @@ gem 'devise'
 gem 'figaro', '1.0'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'pundit'
+gem 'faker'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

@@ -1,15 +1,15 @@
-      <% wikis.each do |wiki| %>
-        <tr>
-          <td><%= link_to wiki.title, wiki %></td>
-          <td class="tdbuttons">
-            <% if policy(wiki).edit? %>
-              <%= link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-success'%>
-            <% end %>
-          </td>
-           <td class="tdbuttons">
-            <% if policy(wiki).destroy? %>
-              <%= link_to "Delete", wiki, method: :delete, class: 'btn btn-danger', data: {confirm:'Are you sure you want to delete this list?'} %>
-            <% end %>
-          </td>
-        </tr>
+<% wikis.each do |wiki| %>
+  <tr>
+    <td><%= link_to wiki.title, wiki %></td>
+    <td class="tdbuttons">
+      <% if policy(wiki).edit? %>
+        <%= link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-info'%>
       <% end %>
+    </td>
+     <td class="tdbuttons">
+      <% if policy(wiki).destroy? %>
+        <%= link_to "Delete", wiki, method: :delete, class: 'btn btn-danger', data: {confirm:'Are you sure you want to delete this list?'} %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
