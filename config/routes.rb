@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
   resources :wikis
 
+  resources :charges, only: [:new, :create]
+  get 'charges/downgrade' => 'charges#downgrade'
+  get 'charges/downgrade_proceed' => 'charges#downgrade_proceed'
+
   devise_for :users
   root 'welcome#index'
 

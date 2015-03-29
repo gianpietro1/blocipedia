@@ -4,16 +4,20 @@
   </div>
 </div>
 
-<% if policy(Wiki.new).create? %>
 <div class="row">
   <div class="col-md-12 text-right">
-    <%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success' %>
-    <p></p>
+    <% if policy(Wiki.new).create? %>
+      <%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success pull-right' %>
+    <% end %>
+    <% if current_user.role == 'standard' %>
+      <%= link_to "Upgrade to Premium", new_charge_path, class: 'btn btn-warning pull-left' %>
+    <% elsif current_user.role == 'premium' %>
+      <%= link_to "Downgrade to Standard", charges_downgrade_path, class: 'btn btn-warning pull-left' %>
+    <% end %>
   </div>
 </div>  
-<% end %>
 
-<div class="row">
+<div class="row margin-top-10">
 
  <div class="col-md-6" id="public_wikis">
     <table class="table table-striped">

@@ -13,4 +13,16 @@ class User < ActiveRecord::Base
     role == 'premium'
   end
 
+  def upgrade_since_days
+    if upgrade_date
+      ((Time.now - upgrade_date)/86400).round
+    else
+      nil
+    end
+  end
+
+  def refundable?
+    upgrade_since_days <=0
+  end
+
 end

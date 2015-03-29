@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="text-center">Downgrade to Standard</h2>
+  </div>
+</div>
+
+<div class="row" "margin-top-20">
+  <p>You have been a Premium user for <%= current_user.upgrade_since_days %> day/s.</p>
+  <%if current_user.refundable? %>
+    <p><strong>You are entitled to a refund if you cancel your subscription now.</strong></p>
+  <% else %>
+    <p><strong>You are not entitled to a refund if you cancel your subscription.</strong></p>
+  <% end %>
+  <p>Are you sure you want to cancel it?</p>
+  <%= link_to 'Downgrade', charges_downgrade_proceed_path, class: 'btn btn-danger' %>
+</div>
