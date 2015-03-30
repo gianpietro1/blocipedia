@@ -21,8 +21,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def refund_limit
+    1 # days allowed for refund
+  end
+
   def refundable?
-    upgrade_since_days <=0
+    upgrade_since_days < refund_limit
   end
 
 end

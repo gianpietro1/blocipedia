@@ -8,20 +8,15 @@ class ChargesController < ApplicationController
    )
  
    # Where the real magic happens
-   charge = Stripe::Charge.create(
+    charge = Stripe::Charge.create(
      customer: customer.id,
      amount: Amount.default,
-     description: "BigMoney Membership - #{current_user.email}",
+     description: "Blocipedia Membership - #{current_user.email}",
      currency: 'usd'
    )
 
-   # After successful payment:
-   # Store charge.id
-   current_user.update_attributes(upgrade_charge_id:charge.id)
-   # Upgrade role
-   current_user.update_attributes(role:'premium')
-   # Populate upgrade date
-   current_user.update_attributes(upgrade_date: Time.now)
+   # After successful payment: Store charge.id, upgrade role & upgrade_date
+   current_user.update_attributes(upgrade_charge_id: charge.id, role: 'premium', upgrade_date: Time.now)
    # Back to wikis with the flash
    flash[:notice] = "Thanks for your payment #{current_user.email}! Enjoy your premium status."
    redirect_to wikis_path
@@ -38,22 +33,9 @@ class ChargesController < ApplicationController
   def new
    @stripe_btn_data = {
      key: "#{ Rails.configuration.stripe[:publishable_key] }",
-     description: "BigMoney Membership - #{current_user.name}",
+     description: "Blocipedia Membership - #{current_user.name}",
      amount: Amount.default
    }
-  end
-
-  def downgrade
-  end
-
-  def downgrade_proceed
-   if current_user.refundable?
-    charge = Stripe::Charge.retrieve(current_user.upgrade_charge_id)
-    charge.refund
-   end
-   flash[:notice] = "Your account has been downgraded to standard."
-   current_user.update_attributes(role:'standard')
-   redirect_to wikis_path
   end
 
 end

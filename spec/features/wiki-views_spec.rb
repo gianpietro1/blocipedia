@@ -9,18 +9,21 @@ feature 'User visits wikis' do
     @user1 = create(:user)
     @user2 = create(:user)
     login_as(@user1, :scope => :user)
-    @wiki1user1 = create(:wiki, user: @user1, private: false)    
-    @wiki2user1 = create(:wiki, user: @user1, private: false)
-    @wiki1user2 = create(:wiki, user: @user2, private: false)
+    @wiki1user1 = create(:wiki, user: @user1)    
+    @wiki2user1 = create(:wiki, user: @user1)
+    @wiki1user2 = create(:wiki, user: @user2)
   end
   
   scenario 'Successfully' do
     visit wikis_path
     within('#public_wikis') do
-      expect(page).to have_content(@wiki1user1.title, @wiki2user1.title, @wiki1user2.title)
+      expect(page).to have_content(@wiki1user1.title)
+      expect(page).to have_content(@wiki2user1.title)
+      expect(page).to have_content(@wiki1user2.title)
     end
     within('#my_wikis') do
-      expect(page).to have_content(@wiki1user1.title, @wiki2user1.title)
+      expect(page).to have_content(@wiki1user1.title)
+      expect(page).to have_content(@wiki2user1.title)
     end
   end
 
@@ -54,12 +57,13 @@ feature 'User shows wiki' do
   before do
     @user = create(:user)
     login_as(@user, :scope => :user)
-    @wiki = create(:wiki, user: @user, private: false)    
+    @wiki = create(:wiki, user: @user)    
   end
   
   scenario 'Successfully public' do
     visit wiki_path(@wiki)
-    expect(page).to have_content(@wiki.title, @wiki.body)
+    expect(page).to have_content(@wiki.title)
+    expect(page).to have_content(@wiki.body)
   end
 
 end
@@ -72,7 +76,7 @@ feature 'User edits wiki' do
   before do
     @user = create(:user)
     login_as(@user, :scope => :user)
-    @wiki = create(:wiki, user: @user, private: false)    
+    @wiki = create(:wiki, user: @user)    
     @updated_body = "A body with more than 20 characters, updated."
   end
   

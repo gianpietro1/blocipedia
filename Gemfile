@@ -20,6 +20,7 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'pry-rails'
+  gem 'stripe-ruby-mock', '~> 2.1.1', :require => 'stripe_mock'
 end
 
 # Use SCSS for stylesheets

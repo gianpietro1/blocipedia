@@ -17,8 +17,7 @@ describe WikisController do
     it "creates a new wiki for the current user" do
       expect( @user.wikis ).to be_empty
       
-      post :create, :wiki => {title: @valid_title, body: @valid_title}
-
+      post :create, :wiki => {title: @valid_title, body: @valid_body}
 
       expect( @user.wikis ).not_to be_nil      
     end
@@ -72,6 +71,18 @@ describe WikisController do
         
         wiki.reload
         expect( wiki.body ).to eq(@updated_body)
+      end
+    end
+
+    context 'others private wikis' do
+      it "does not update a wiki" do
+        wiki = create(:wiki, title: @valid_title, body: @valid_body, user: @another_user, private: true)
+        expect( wiki.body ).to eq(@valid_body)
+
+        put :update, :id => wiki.id , :wiki => {title: @valid_title, body: @updated_body}
+        
+        wiki.reload
+        expect( wiki.body ).to eq(@valid_body)
       end
     end
 
