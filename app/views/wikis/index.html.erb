@@ -12,7 +12,7 @@
     <% if current_user.role == 'standard' %>
       <%= link_to "Upgrade to Premium", new_charge_path, class: 'btn btn-warning pull-left' %>
     <% elsif current_user.role == 'premium' %>
-      <%= link_to "Downgrade to Standard", downgrade_path, class: 'btn btn-warning pull-left' %>
+      <%= link_to "Downgrade to Standard", new_downgrade_path, class: 'btn btn-warning pull-left' %>
     <% end %>
   </div>
 </div>  

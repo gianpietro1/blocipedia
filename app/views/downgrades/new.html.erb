@@ -8,8 +8,8 @@
   <p>You have been a Premium user for <%= current_user.upgrade_since_days %> day/s</p>
   <p><strong>Refunds apply if user has been Premium for less than <%= current_user.refund_limit*24 %> hours.</strong></p>
   <%if current_user.refundable? %>
-    <%= link_to 'Downgrade & Refund', downgrade_proceed_path, class: 'btn btn-danger' %>
+    <%= link_to 'Downgrade & Refund', downgrades_path, method: :post, class: 'btn btn-danger' %>
   <% else %>
-    <%= link_to 'Downgrade', downgrade_proceed_path, class: 'btn btn-danger' %>
+    <%= link_to 'Downgrade', downgrades_path, method: :post, class: 'btn btn-danger' %>
   <% end %>
 </div>

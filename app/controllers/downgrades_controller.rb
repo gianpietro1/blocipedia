@@ -1,9 +1,9 @@
 class DowngradesController < ApplicationController
 
-  def index
+  def new
   end
 
-  def proceed
+  def create
     # downgrade role
     current_user.update_attributes(role:'standard')
     

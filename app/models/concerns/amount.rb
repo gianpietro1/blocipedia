@@ -1,4 +1,4 @@
-class Amount < ActiveRecord::Base
+class Amount
 
   def self.default
     return 10_00
