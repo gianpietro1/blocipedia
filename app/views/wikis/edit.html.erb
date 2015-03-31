@@ -23,7 +23,8 @@
           <% end %>
       </div>
     <% end %>
-      <%= f.submit "Save", class: 'btn btn-success' %>
+      <%= link_to "Cancel", wikis_path, class: "btn btn-danger pull-left" %></td>
+      <%= f.submit "Save", class: 'btn btn-success pull-right' %>
   <% end %>
   </div>
   <div class="col-md-2"></div>

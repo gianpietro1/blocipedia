@@ -1,6 +1,6 @@
 <% wikis.each do |wiki| %>
   <tr>
-    <td><%= link_to wiki.title, wiki %></td>
+    <td><%= link_to (markdown_to_html wiki.title), wiki %></td>
     <td class="tdbuttons">
       <% if policy(wiki).edit? %>
         <%= link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-info'%>

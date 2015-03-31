@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-md-12">
-    <h2 class="text-center"><%= @wiki.title %></h2>
+    <h2 class="text-center"><%= markdown_to_html @wiki.title %></h2>
   </div>
 </div>
 
 <div class="row">
 
   <div class="col-md-12">
-    <%= @wiki.body %>
+    <%= markdown_to_html @wiki.body %>
   </div>
   
 </div>
@@ -15,7 +15,8 @@
 <div class="row">
   <p></p>
   <div class="col-md-12">
-    <%= link_to "Back to Wikis", wikis_path, class: "btn btn-info" %></td>
+    <%= link_to "Back to Wikis", wikis_path, class: "btn btn-success pull-left" %></td>
+    <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-info pull-right'%>
   </div>
   
 </div>

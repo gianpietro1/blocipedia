@@ -39,6 +39,7 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem 'pundit'
 gem 'faker'
 gem 'stripe'
+gem 'redcarpet'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

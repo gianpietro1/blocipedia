@@ -14,10 +14,18 @@ end
 users = User.all
 
 # Create Wikis
-50.times do
+15.times do
   Wiki.create!(
     title: Faker::Lorem.sentence,
-    body: Faker::Lorem.paragraphs(50, true),
+    body: 
+      "###" + Faker::Lorem.sentence + 
+      "...[RedCarpet at Github](https://github.com/vmg/redcarpet)!" +
+      "
+      This wiki is good for:
+          * understanding wikis
+          * faking wikis
+          * editing wikis
+      " + Faker::Lorem.paragraph(25),
     user: users.sample
     )
 end
