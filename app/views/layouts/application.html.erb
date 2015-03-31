@@ -9,9 +9,19 @@
 <body>
   <div class="container">
 
+    <p></p>
+
+    <div class="pull-left">
+      <%if current_user %>
+         <%= link_to root_path, class: 'btn btn-primary btn-sm' do %>
+              <span class="glyphicon glyphicon-home"></span>
+            <% end %>
+      <% end %>
+    </div>
+
     <div class="pull-right user-info">
       <%if current_user %>
-         Hello <%= link_to (current_user.name || current_user.email), root_path %>!
+         Hello <%= (current_user.name || current_user.email) %>!
             <%= link_to edit_user_registration_path, class: 'btn btn-primary btn-sm' do %>
               <span class="glyphicon glyphicon-user"></span>
             <% end %>
@@ -26,17 +36,17 @@
     <% if flash[:notice] %>
     <div class="alert alert-success">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:notice] %>
+      &nbsp<%= flash[:notice] %>
     </div>
     <% elsif flash[:error] %>
     <div class="alert alert-danger">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:error] %>
+      &nbsp<%= "   " + flash[:error] %>
     </div>
     <% elsif flash[:alert] %>
     <div class="alert alert-warning">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <%= flash[:alert] %>
+      &nbsp<%= "   " + flash[:alert] %>
     </div>
     <% end %>
     
