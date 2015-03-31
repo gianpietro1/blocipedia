@@ -17,9 +17,9 @@ class DowngradesController < ApplicationController
     if current_user.refundable?
       ch = Stripe::Charge.retrieve(current_user.upgrade_charge_id)
       refund = ch.refunds.create
-      flash[:notice] = "Your account has been downgraded to standard and a refund has been processed."
+      flash[:alert] = "Your account has been downgraded to standard and a refund has been processed."
     else
-      flash[:notice] = "Your account has been downgraded to standard with no refund."
+      flash[:alert] = "Your account has been downgraded to standard with no refund."
     end
     
     # back to wikis

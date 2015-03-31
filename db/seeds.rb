@@ -48,7 +48,8 @@ premium = User.new(
   name: 'Premium User',
   email: 'premium@example.com',
   password: 'helloworld',
-  role: 'premium'
+  role: 'premium',
+  upgrade_date: (Time.now - 100.days)
 )
 premium.skip_confirmation!
 premium.save!

@@ -5,13 +5,11 @@
 </div>
 
 <div class="row text-center margin-top-20">
-  <p>You have been a Premium user for <%= current_user.upgrade_since_days %> day/s.</p>
-  <p>Refunds apply if user has been Premium for less than <%= current_user.refund_limit*24 %> hours, so you
+  <p>You have been a Premium user for <%= current_user.upgrade_since_days %> day/s</p>
+  <p><strong>Refunds apply if user has been Premium for less than <%= current_user.refund_limit*24 %> hours.</strong></p>
   <%if current_user.refundable? %>
-    <strong>ARE entitled to a refund</strong> if you cancel your subscription now.</p>
+    <%= link_to 'Downgrade & Refund', downgrade_proceed_path, class: 'btn btn-danger' %>
   <% else %>
-    <strong>ARE NOT entitled to a refund</strong> if you cancel your subscription.</p>
+    <%= link_to 'Downgrade', downgrade_proceed_path, class: 'btn btn-danger' %>
   <% end %>
-  <p>Are you sure you want to cancel it?</p>
-  <%= link_to 'Downgrade', downgrade_proceed_path, class: 'btn btn-danger' %>
 </div>
