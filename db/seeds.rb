@@ -19,7 +19,7 @@ users = User.all
     title: Faker::Lorem.sentence,
     body: 
       "###" + Faker::Lorem.sentence + 
-      "...[RedCarpet at Github](https://github.com/vmg/redcarpet)!" +
+      " - [RedCarpet at Github](https://github.com/vmg/redcarpet)!" +
       "
       This wiki is good for:
           * understanding wikis

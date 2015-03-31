@@ -1,23 +1,26 @@
-<br/>
-<h1>Blocipedia: Social, Markdown Wikis</h1>
-<div class="jumbotron">
-  <p>Create and share Markdown Wikis</p>
-  <p>
-    <% if !current_user %>
-      <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-primary' %>
-    <% else %>
-      <%= link_to "Go to Wikis", wikis_path, class: 'btn btn-primary' %>
-    <% end %>
-  </p>
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <h2>Free Plan</h2>
-    <p>Create as many public wikis as you want!</p>
+<div class="margin-top-50">
+  <div class="jumbotron text-center">
+    <h2>Blocipedia: Social, Markdown Wikis</h2>
+    <p>Create and share Markdown Wikis</p>
+    <p>
+      <% if !current_user %>
+        <%= link_to "Sign Up", new_user_registration_path, class: 'btn btn-primary' %>
+        or
+        <%= link_to "Sign In", new_user_session_path, class: 'btn btn-primary' %>
+      <% else %>
+        <%= link_to "Go to Wikis", wikis_path, class: 'btn btn-primary' %>
+      <% end %>
+    </p>
   </div>
-  <div class="col-md-6">
-    <h2>Premium Plan</h2>
-    <p>Create private wikis!</p>
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <h2>Free Plan</h2>
+      <p>Create as many public wikis as you want!</p>
+    </div>
+    <div class="col-md-6 text-center">
+      <h2>Premium Plan</h2>
+      <p>Create private wikis!</p>
+    </div>
   </div>
 </div>
