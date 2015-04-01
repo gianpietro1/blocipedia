@@ -40,6 +40,7 @@ gem 'pundit'
 gem 'faker'
 gem 'stripe'
 gem 'redcarpet'
+gem 'epic-editor-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

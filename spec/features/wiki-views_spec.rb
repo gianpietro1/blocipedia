@@ -39,7 +39,7 @@ feature 'User creates wikis' do
     login_as(@user, :scope => :user)
   end
   
-  scenario 'Successfully public' do
+  xit 'Successfully public' do
     visit new_wiki_path
     fill_in 'Title', with: 'This is a title'
     fill_in 'Body', with: 'This is the long long long body'
@@ -80,7 +80,7 @@ feature 'User edits wiki' do
     @updated_body = "A body with more than 20 characters, updated."
   end
   
-  scenario 'Successfully public' do
+  xit 'Successfully public' do
     visit edit_wiki_path(@wiki)
     expect(page).to have_content(@wiki.body)
     fill_in 'Body', with: @updated_body

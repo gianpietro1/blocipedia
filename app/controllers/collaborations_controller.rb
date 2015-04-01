@@ -2,12 +2,11 @@ class CollaborationsController < ApplicationController
   
   def index
     @wiki = Wiki.find(params[:wiki_id])
-    @users = User.all - User.where(id: current_user) - @wiki.users
+    @users = User.all - @wiki.users
     @collaborators = @wiki.collaborators
   end
 
   def create
-    @users = User.all - User.where(id: current_user)
     @wiki = Wiki.find(params[:wiki_id])
     if params[:user_ids]
       flash[:notice] = "Collaborators where updated."

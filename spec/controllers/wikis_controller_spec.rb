@@ -14,8 +14,18 @@ describe WikisController do
   end
 
   describe '#create' do
-    it "creates a new wiki for the current user" do
+    it "creates a new wiki for the current user and adds it as collaborator" do
       expect( @user.wikis ).to be_empty
+
+      post :create, :wiki => {title: @valid_title, body: @valid_body}
+
+      expect( @user.wikis ).not_to be_nil      
+
+      expect( @user.wikis.first.users ).to include(@user)      
+
+    end
+
+    it "creates a new collaborator (owner)" do
       
       post :create, :wiki => {title: @valid_title, body: @valid_body}
 

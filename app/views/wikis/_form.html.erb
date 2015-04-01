@@ -1,0 +1,28 @@
+  <%= form_for wiki do |f| %>
+    <div class='form-group margin-top-20'>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control', placeholder: "Enter wiki title" %>
+    </div>
+    <div class='form-group'>
+      <%= f.label :body %>
+      <%= f.hidden_field :body, id:'body' %>
+      <div id="epiceditor"></div>
+    </div>
+    <% if (policy(wiki)).public_send("#{action}") && current_user.premium? %>
+      <div class='form-group'>      
+        <%= f.label :private, class: 'checkbox margin-left-13' do %>
+          <%= f.check_box :private %> Private Wiki
+          <% end %>
+      </div>
+    <% end %>
+      <%= link_to "Cancel", wikis_path, class: "btn btn-danger pull-left" %>
+      <%= f.submit "Save", class: 'btn btn-success pull-right', onclick: "prep()" %>
+  <% end %>
+
+<script>
+   var editor = new EpicEditor().load();
+   editor.getElement('editor').body.innerHTML = '<%= escape_javascript(content) %>';
+   function prep() {
+     $("#body")[0].value = (editor.getElement('editor').body.innerHTML);
+   }
+</script>

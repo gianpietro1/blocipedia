@@ -51,6 +51,14 @@ end
 
 context "when using self method" do
 
+ before do
+    @user_owner = create(:user)
+    @user_collaborator = create(:user)
+    @user_other = create(:user)
+    @wiki = create(:wiki, user_id: @user_owner.id)
+    collaborator = create(:collaboration, wiki_id: @wiki.id, user_id: @user_collaborator.id)
+  end
+
   describe "public" do
       it "will return true if public" do
         wiki = create(:wiki)
@@ -61,4 +69,23 @@ context "when using self method" do
       end
   end
 
+  describe "users" do
+ 
+      it "will return a list of collaborators including the owner" do
+      
+        expect( @wiki.users ).to include @user_owner
+        expect( @wiki.users ).to include @user_collaborator
+
+      end
+  end
+
+  describe "collaborators" do
+ 
+      it "will return a list of collaborators not including the owner" do
+
+        expect( @wiki.collaborators ).to include @user_collaborator
+        expect( @wiki.collaborators ).not_to include @user_owner
+
+      end
+  end
 end
