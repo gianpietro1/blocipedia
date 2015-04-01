@@ -14,7 +14,7 @@ class CollaborationsController < ApplicationController
       params[:user_ids].each do |user_id|
           @collaboration = @wiki.collaborations.create(user_id: user_id)        
       end
-      redirect_to @wiki
+      redirect_to wiki_collaborations_path(@wiki)
     else
       flash[:warning] = "No collaborators where added."
       redirect_to @wiki
@@ -29,7 +29,7 @@ class CollaborationsController < ApplicationController
           @collaboration = @wiki.collaborations.find_by(user_id: user_id)
           @collaboration.destroy      
       end
-      redirect_to @wiki
+      redirect_to wiki_collaborations_path(@wiki)
     else
       flash[:warning] = "No collaborators where removed."
       redirect_to @wiki

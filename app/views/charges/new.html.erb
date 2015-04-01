@@ -7,7 +7,15 @@
 <div class="row" "margin-top-20">
     <div class="col-md-12 text-center">
       <%= form_tag charges_path do %>
-         <h4>Click the button to pay.</h4>
+         <h4 class="payment">
+           <p>Upgrade to premium now and enjoy the benefits!</p>
+           <div class="benefits">
+              <p>Make your wikis private.</p>
+              <p>Collaborate with others.</p>
+              <p>Receive an annual gift from our staff!</p>              
+            </div>
+         </h4>
+         <h3>Click the button to pay.</h3>
          <script class='stripe-button' src="https://checkout.stripe.com/checkout.js" data-key="<%= @stripe_btn_data[:key] %>" data-amount=<%= @stripe_btn_data[:amount] %> data-description="<%= @stripe_btn_data[:description] %>" ></script>
        <% end %>
      </div>
