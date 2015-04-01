@@ -16,7 +16,8 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = current_user.wikis.build(wiki_params)
+    @wiki = Wiki.create(wiki_params)
+    @wiki.user_id = current_user.id
     authorize @wiki    
     if @wiki.save
       flash[:notice] = "Wiki was saved."
@@ -29,13 +30,20 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-     authorize @wiki    
+    authorize @wiki    
  end
 
   def update
     @wiki = Wiki.find(params[:id])
     authorize @wiki    
     if @wiki.update_attributes(wiki_params)
+      if (@wiki.public? && @wiki.collaborators.any?)
+        @wiki.collaborations.each do |collaboration|
+          if collaboration.user_id != @wiki.user.id
+            collaboration.destroy
+          end
+        end
+      end
       flash[:notice] = "Wiki was updated."
       redirect_to @wiki
     else

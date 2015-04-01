@@ -30,6 +30,11 @@ users = User.all
     )
 end
 wikis = Wiki.all
+
+# Create Collaborations
+wikis.each do |wiki| 
+  Collaboration.create(user_id: wiki.user_id, wiki_id: wiki.id)
+end
   
 # Create an admin user
 admin = User.new(

@@ -9,8 +9,17 @@ class DowngradesController < ApplicationController
     
     # change private wikis to public
     private_wikis = current_user.wikis.find_by(private: true)
+
     if private_wikis
      private_wikis.update_attributes(private: false)
+      if private_wikis.collaborations
+       private_wikis.collaborations.each do |collaboration|
+        if collaboration.user_id != current_user.id
+          collaboration.destroy
+        end
+      end
+    end
+
     end
     
     # refund if applicable

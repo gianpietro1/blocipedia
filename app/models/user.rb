@@ -3,8 +3,10 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  has_many :wikis
-
+  has_many :wikis, through: :collaborations, dependent: :destroy
+  has_many :collaborations, dependent: :destroy
+  # has_many :wikis # can I remove this somehow? OK! got it by removing user association while creating.
+  
   def admin?
     role == 'admin'
   end

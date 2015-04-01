@@ -5,18 +5,19 @@
 </div>
 
 <div class="row">
-
-  <div class="col-md-12">
-    <%= markdown_to_html @wiki.body %>
+  <div class="col-md-2">
   </div>
-  
-</div>
 
-<div class="row">
-  <p></p>
-  <div class="col-md-12">
-    <%= link_to "Back to Wikis", wikis_path, class: "btn btn-success pull-left" %></td>
+  <div class="col-md-8">
+    <div class="margin-top-20 wiki">
+      <%= markdown_to_html @wiki.body %>
+    </div>
+    <%= link_to "Back to Wikis", wikis_path, class: "btn btn-success pull-left" %>
     <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-info pull-right'%>
   </div>
-  
+
+  <div class="col-md-2">
+  </div>  
+</div>
+
 </div>

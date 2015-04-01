@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  resources :wikis
+  resources :wikis do 
+    resources :collaborations, only: [:index, :create]
+    delete 'collaborations/destroy'
+  end
 
   resources :charges, only: [:new, :create]
 

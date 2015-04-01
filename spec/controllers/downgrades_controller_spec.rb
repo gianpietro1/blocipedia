@@ -41,7 +41,7 @@ describe DowngradesController do
         
         sign_in @user_new
         
-        post :proceed
+        post :create
 
         @user_new.reload
 
@@ -60,7 +60,7 @@ describe DowngradesController do
         
         sign_in @user_old
         
-        post :proceed
+        post :create
 
         @user_old.reload
 
