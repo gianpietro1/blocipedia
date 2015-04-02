@@ -13,7 +13,7 @@
       <% end %>
     </div>
 
-  <%= render partial: 'form', locals: {wiki: @wiki, action: "destroy?", content: markdown_to_html(@wiki.body) } %>
+  <%= render partial: 'form', locals: {wiki: @wiki, action: "destroy?"} %>
 
 <% if @wiki.collaborators.any? %>
   <div class="margin-top-50">

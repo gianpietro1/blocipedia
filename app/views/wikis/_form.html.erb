@@ -33,8 +33,8 @@
 
 <script>
    var editor = new EpicEditor().load();
-   editor.getElement('editor').body.innerHTML = '<%= escape_javascript(content) %>';
+   editor.getElement('editor').body.innerText = '<%= escape_javascript(wiki.body) %>';
    function prep() {
-     $("#body")[0].value = (editor.getElement('editor').body.innerHTML);
+     $("#body")[0].value = editor.getElement('editor').body.innerText;
    }
 </script>
