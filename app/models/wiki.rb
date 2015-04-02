@@ -7,6 +7,13 @@ class Wiki < ActiveRecord::Base
   validates :body, length: {minimum: 20}, presence: true
   validates :user, presence: true
 
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :history]
+
+  def should_generate_new_friendly_id?
+    slug.blank? || title_changed?
+  end
+
   # Scopes
   default_scope { order('created_at DESC') }
   scope :public_wikis, -> { where(private: false) }

@@ -41,6 +41,7 @@ gem 'faker'
 gem 'stripe'
 gem 'redcarpet'
 gem 'epic-editor-rails'
+gem 'friendly_id'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

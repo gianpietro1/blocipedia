@@ -6,7 +6,10 @@ class WikisController < ApplicationController
    end
 
   def show
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
+    if request.path != wiki_path(@wiki)
+      redirect_to @wiki, status: :moved_permanently
+    end
     authorize @wiki    
   end
 
@@ -29,12 +32,12 @@ class WikisController < ApplicationController
   end
 
   def edit
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki    
  end
 
   def update
-    @wiki = Wiki.find(params[:id])
+    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki    
     if @wiki.update_attributes(wiki_params)
       #if (@wiki.public? && @wiki.collaborators.any?)
@@ -53,7 +56,7 @@ class WikisController < ApplicationController
   end
 
   def destroy
-   @wiki = Wiki.find(params[:id])
+   @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki    
    if @wiki.destroy
       flash[:notice] = "Wiki was deleted successfully."
