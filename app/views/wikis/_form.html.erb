@@ -27,6 +27,10 @@
           <% end %>
       </div>
     <% end %>
+    <div class='form-group'>
+      <%= f.label "Tags (comma separated)" %>
+      <%= f.text_field :all_tags, class: 'form-control', placeholder: "Enter tags separated by commas" %>
+    </div>    
       <%= link_to "Cancel", wikis_path, class: "btn btn-danger pull-left" %>
       <%= f.submit "Save", class: 'btn btn-success pull-right', onclick: "prep()" %>
   <% end %>

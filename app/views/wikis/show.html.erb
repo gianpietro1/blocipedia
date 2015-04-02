@@ -12,8 +12,13 @@
     <div class="margin-top-20 wiki">
       <%= markdown_to_html(@wiki.body) %>
     </div>
+    <div class="margin-top-10 tags">
+      <strong>Tags: </strong><% @wiki.tags.each do |tag|%><span><%= tag.name %> </span><%end%>
+    </div>
+    <div class="margin-top-10">
     <%= link_to "Back to Wikis", wikis_path, class: "btn btn-success pull-left" %>
     <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-info pull-right'%>
+    </div>
   </div>
 
   <div class="col-md-2">

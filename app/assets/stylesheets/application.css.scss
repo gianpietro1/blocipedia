@@ -24,10 +24,19 @@
 }
 
 .wiki {
-  height: 500px;
-  background-color: #fefefe;
+  height: 450px;
   border-radius: 10px;
+  border: 1px solid #fafafa;
   padding: 15px;
+}
+
+.tags {
+  border: 1px solid #fafafa;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: #f5f5f5;
+  font-size: 0.9em;
+  font-style: italic;
 }
 
 .collaborators {
