@@ -1,4 +1,16 @@
   <%= form_for wiki do |f| %>
+       
+    <% if wiki.errors.any? %>
+      <div class="alert alert-danger">
+      <h4>There are <%= pluralize(wiki.errors.count, "error") %>.</h4>
+        <ul>
+          <% wiki.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <div class='form-group margin-top-20'>
       <%= f.label :title %>
       <%= f.text_field :title, class: 'form-control', placeholder: "Enter wiki title" %>
