@@ -15,7 +15,17 @@
 
   <%= render partial: 'form', locals: {wiki: @wiki, action: "destroy?", content: markdown_to_html(@wiki.body) } %>
 
-
+<% if @wiki.collaborators.any? %>
+  <div class="margin-top-50">
+    <small>Collaborating with:
+      <ul> 
+        <% @wiki.collaborators.each do |collaborator| %>
+          <li><%= collaborator.name %></li>
+      <% end %>
+      </ul>
+    </small>
+  </div>
+<% end %>
   </div>
   <div class="col-md-2"></div>
 </div>

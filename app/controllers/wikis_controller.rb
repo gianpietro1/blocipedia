@@ -40,15 +40,15 @@ class WikisController < ApplicationController
     @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki    
     if @wiki.update_attributes(wiki_params)
-      #if (@wiki.public? && @wiki.collaborators.any?)
-       # @wiki.collaborations.each do |collaboration|
-        #  if collaboration.user_id != @wiki.user.id
-         #   collaboration.destroy
-          #end
-        #end
-      #end
-      flash[:notice] = "Wiki was updated."
-      redirect_to @wiki
+      if (@wiki.public? && @wiki.collaborators.any?)
+       @wiki.collaborations.each do |collaboration|
+         if collaboration.user_id != @wiki.user.id
+           collaboration.destroy
+         end
+      end
+    end
+     flash[:notice] = "Wiki was updated."
+     redirect_to @wiki
     else
       flash[:error] = "There was an error updating the wiki. Please try again."
       render :edit

@@ -1,13 +1,13 @@
 class CollaborationsController < ApplicationController
   
   def index
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     @users = User.all - @wiki.users
     @collaborators = @wiki.collaborators
   end
 
   def create
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     if params[:user_ids]
       flash[:notice] = "Collaborators where updated."
       params[:user_ids].each do |user_id|
@@ -21,7 +21,7 @@ class CollaborationsController < ApplicationController
   end
 
   def destroy
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     if params[:user_ids]
       flash[:notice] = "Collaborators where updated."
       params[:user_ids].each do |user_id|
