@@ -1,7 +1,8 @@
 class WikisController < ApplicationController
+
   def index
     @user_wikis = current_user.wikis
-    @wikis = Wiki.public_wikis
+    @wikis = Wiki.public_wikis.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
     authorize @wikis
    end
 
@@ -72,5 +73,6 @@ class WikisController < ApplicationController
   def wiki_params
     params.require(:wiki).permit(:title, :body, :private, :all_tags)
   end
+
 
 end

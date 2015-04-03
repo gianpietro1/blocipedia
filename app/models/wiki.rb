@@ -45,4 +45,12 @@ class Wiki < ActiveRecord::Base
     self.tags.map(&:name).join(", ")
   end
 
+  def self.search(search)
+    if search
+      self.joins('LEFT OUTER JOIN "taggings" ON "taggings"."wiki_id" = "wikis"."id" LEFT OUTER JOIN "tags" ON "tags"."id" = "taggings"."tag_id"').uniq.where('tags.name LIKE ? OR wikis.title LIKE ?', "%#{search}%", "%#{search}%")
+    else
+      all
+    end
+  end
+
 end

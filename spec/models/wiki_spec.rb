@@ -88,4 +88,58 @@ context "when using self method" do
 
       end
   end
+
+  describe "all_tags setter & getter" do
+ 
+      it "will set and tags for current wiki" do
+
+        expect( @wiki.tags ).to be_empty
+
+        @wiki.all_tags = "tag1,tag2,tag3"
+
+        expect( @wiki.all_tags ).to eq "tag1, tag2, tag3"
+        expect( @wiki.tags.first.name ).to eq "tag1"
+        expect( @wiki.tags.last.name ).to eq "tag3"
+
+        @wiki.all_tags = "tag1,tag2 tag3"
+
+        expect( @wiki.all_tags ).to eq "tag1, tag2 tag3"
+        expect( @wiki.tags.first.name ).to eq "tag1"
+        expect( @wiki.tags.last.name ).to eq "tag2 tag3"
+
+    end
+
+  end
+
+  describe "search tags & title" do
+
+    before do
+        @wiki1 = create(:wiki, title: "Wiki 1")
+        @wiki2 = create(:wiki, title: "Wiki 2")
+        @wiki3 = create(:wiki, title: "Wiki 3")
+        @wiki2.all_tags = "tag23" 
+        @wiki3.all_tags = "tag23" 
+    end
+
+ 
+      it "will retrieve wikis according to search term" do
+
+        @wikis = Wiki.search("Wiki 1")
+        expect( @wikis ).to include(@wiki1) 
+        expect( @wikis ).not_to include(@wiki2)
+        expect( @wikis ).not_to include(@wiki3)
+        
+        @wikis = Wiki.search("tag23")
+        expect( @wikis ).not_to include(@wiki1) 
+        expect( @wikis ).to include(@wiki2)
+        expect( @wikis ).to include(@wiki3)
+
+    end
+
+  end
+
 end
+
+
+
+ 

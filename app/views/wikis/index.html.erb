@@ -22,6 +22,18 @@
  <div class="col-md-8" id="public_wikis">
     <table class="table table-striped">
       <th colspan="4" class="text-center">Public wikis</th>
+      
+      <tr colspan="4">
+        <td>
+          <%= form_tag wikis_path, :method => 'get' do %>
+          <p>
+            <%= text_field_tag :search, params[:search], placeholder: "Search by title or tag" %>
+            <%= submit_tag "Search", :name => nil %>
+          </p>
+          <% end %>
+        </td>
+      </tr>
+
       <tr class="tr_header">
         <td>Title</td>
         <td>Owner</td>
@@ -29,6 +41,7 @@
       </tr>
         <%= render partial: 'wikis', locals: { wikis: @wikis } %>
     </table>
+    <%= will_paginate @wikis %>
   </div>
 
   <div class="col-md-4" id="my_wikis">
