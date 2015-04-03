@@ -1,4 +1,3 @@
-if Rails.env.development? || Rails.env.test?
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     address: 'smtp.sendgrid.net',
@@ -9,4 +8,3 @@ if Rails.env.development? || Rails.env.test?
     domain: 'heroku.com',
     enable_starttls_auto: true
   }
-end 
