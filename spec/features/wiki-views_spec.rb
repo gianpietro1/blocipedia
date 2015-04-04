@@ -39,10 +39,11 @@ feature 'User creates wikis' do
     login_as(@user, :scope => :user)
   end
   
-  xit 'Successfully public' do
+  scenario 'Successfully public' do
     visit new_wiki_path
     fill_in 'Title', with: 'This is a title'
-    fill_in 'Body', with: 'This is the long long long body'
+  #fill_in 'Body', with: 'This is the long long long body'
+    find('#body').set('This is the long long long body')
     click_button 'Save'
     expect(page).to have_content('Wiki was saved.')
   end
@@ -80,13 +81,15 @@ feature 'User edits wiki' do
     @updated_body = "A body with more than 20 characters, updated."
   end
   
-  xit 'Successfully public' do
+  scenario 'Successfully public' do
     visit edit_wiki_path(@wiki)
-    expect(page).to have_content(@wiki.body)
-    fill_in 'Body', with: @updated_body
+    @current_body = find('#body', :visible => false).value
+    expect(@current_body).to have_content(@wiki.body)
+    find('#body').set(@updated_body)
     click_button 'Save'
     visit edit_wiki_path(@wiki)
-    expect(page).to have_content(@updated_body)
+    @current_body = find('#body', :visible => false).value
+    expect(@current_body).to have_content(@updated_body)
   end
 
 end
