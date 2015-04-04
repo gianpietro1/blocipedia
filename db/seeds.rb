@@ -3,7 +3,6 @@ require 'faker'
 # Create Users
 5.times do
   user = User.new(
-    name: Faker::Name.name,
     username: Faker::Internet.user_name,
     email: Faker::Internet.email,
     password: Faker::Lorem.characters(10)
@@ -39,7 +38,7 @@ end
   
 # Create an admin user
 admin = User.new(
-  name: 'Admin User',
+  username: 'admin',
   email: 'admin@example.com',
   password: 'helloworld',
   role: 'admin'
@@ -49,7 +48,7 @@ admin.save!
 
 # Create an standard user
 standard = User.new(
-  name: 'Standard User',
+  username: 'standard',
   email: 'standard@example.com',
   password: 'helloworld',
   role: 'standard'
@@ -59,7 +58,7 @@ standard.save!
 
 # Create a premium user
 premium = User.new(
-  name: 'Premium User',
+  username: 'premium',
   email: 'premium@example.com',
   password: 'helloworld',
   role: 'premium',

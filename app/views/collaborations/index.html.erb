@@ -12,7 +12,7 @@
       <div class='form-group collaborators'>      
         <% @users.each do |user| %>
             <%= check_box_tag("user_ids[]", user.id) %>
-              <%= label_tag("user_ids[]", user.name) %></br>
+              <%= label_tag("user_ids[]", (user.username || user.email) %></br>
         <% end %>
       </div>
       <%= submit_tag "Add", class: "btn btn-success" %>
@@ -26,7 +26,7 @@
       <div class='form-group collaborators'>      
         <% @collaborators.each do |user| %>
             <%= check_box_tag("user_ids[]", user.id) %>
-              <%= label_tag("user_ids[]", user.name) %></br>
+              <%= label_tag("user_ids[]", (user.username || user.email)) %></br>
         <% end %>
       </div>
         <%= submit_tag "Remove", class: "btn btn-danger" %>
