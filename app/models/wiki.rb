@@ -3,8 +3,8 @@ class Wiki < ActiveRecord::Base
   has_many :users, through: :collaborations, dependent: :destroy
   has_many :collaborations, dependent: :destroy
 
-  has_many :taggings
-  has_many :tags, through: :taggings
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings, dependent: :destroy
 
   validates :title, length: {minimum: 5}, presence: true
   validates :body, length: {minimum: 20}, presence: true
