@@ -10,6 +10,8 @@ class Wiki < ActiveRecord::Base
   validates :body, length: {minimum: 20}, presence: true
   validates :user, presence: true
 
+  after_create :update_collaboration
+
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
@@ -23,12 +25,6 @@ class Wiki < ActiveRecord::Base
 
   def public?
     private == false
-  end
-
-  after_create :update_collaboration
-
-  def update_collaboration
-     Collaboration.create(wiki_id: self.id, user_id: self.user_id)
   end
 
   def collaborators
@@ -51,6 +47,12 @@ class Wiki < ActiveRecord::Base
     else
       all
     end
+  end
+
+  private
+
+  def update_collaboration
+     Collaboration.create(wiki_id: self.id, user_id: self.user_id)
   end
 
 end
