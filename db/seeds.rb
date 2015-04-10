@@ -15,7 +15,7 @@ users = User.all
 # Create Wikis
 @words = ["coding", "ruby", "bloc", "internet", "SDN", "applications", "devops", "tdd", "openstack"]
 15.times do
-  wiki = Wiki.create!(
+  wiki = Wiki.new(
     title: Faker::Lorem.sentence,
     body: 
       "###" + Faker::Lorem.sentence + 
@@ -28,6 +28,7 @@ users = User.all
     user: users.sample,
     )
   wiki.all_tags = (@words.sample(1 + rand(@words.count)))*","
+  wiki.save!
 end
 wikis = Wiki.all
 

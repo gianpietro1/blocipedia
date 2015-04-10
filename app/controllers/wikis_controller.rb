@@ -60,6 +60,13 @@ class WikisController < ApplicationController
    @wiki = Wiki.friendly.find(params[:id])
     authorize @wiki    
    if @wiki.destroy
+      
+      # Remove all tags from redis database
+      @wiki.all_tags.split(",").each do |tag|
+        $redis.srem(tag,@wiki.id)
+      end
+      $redis.del(@wiki.id)
+      
       flash[:notice] = "Wiki was deleted successfully."
       redirect_to wikis_path
    else

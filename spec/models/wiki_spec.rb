@@ -42,7 +42,9 @@ context "when creating wikis" do
 
   describe "validate default for private" do
       it "will check if public" do
-        wiki = create(:wiki)
+        wiki = build(:wiki)
+        allow(wiki).to receive(:set_tags)
+        wiki.save
         expect( wiki.private ).to eq false
       end
   end
@@ -55,16 +57,22 @@ context "when using self method" do
     @user_owner = create(:user)
     @user_collaborator = create(:user)
     @user_other = create(:user)
-    @wiki = create(:wiki, user_id: @user_owner.id)
+    @wiki = build(:wiki, user_id: @user_owner.id, id: 999)
+    allow(@wiki).to receive(:set_tags)
+    @wiki.save
     collaborator = create(:collaboration, wiki_id: @wiki.id, user_id: @user_collaborator.id)
   end
 
   describe "public" do
       it "will return true if public" do
-        wiki = create(:wiki)
+        wiki = build(:wiki)
+        allow(wiki).to receive(:set_tags)
+        wiki.save
         expect( wiki.public? ).to eq true
 
-        wiki = create(:wiki, private: true)
+        wiki = build(:wiki, private: true)
+        allow(wiki).to receive(:set_tags)
+        wiki.save
         expect( wiki.public? ).to eq false
       end
   end
@@ -93,41 +101,45 @@ context "when using self method" do
  
       it "will set and tags for current wiki" do
 
-        expect( @wiki.tags ).to be_empty
+        @wiki1 = build(:wiki)
+        @wiki1.all_tags=(["tag1","tag2","tag3"]) 
+        @wiki1.save
+        expect( @wiki1.all_tags.split(",") ).to match_array(["tag1","tag2","tag3"])
 
-        @wiki.all_tags = "tag1,tag2,tag3"
+        @wiki1.all_tags=(["tag1","tag2"]) 
+        @wiki1.save
+        expect( @wiki1.all_tags.split(",") ).to match_array(["tag1","tag2"])
 
-        expect( @wiki.all_tags ).to eq "tag1, tag2, tag3"
-        expect( @wiki.tags.first.name ).to eq "tag1"
-        expect( @wiki.tags.last.name ).to eq "tag3"
+        @wiki1.all_tags=([])
+        @wiki1.save
+        expect( @wiki.all_tags.split(",")  ).to match_array([])
 
-        @wiki.all_tags = "tag1,tag2 tag3"
+        @wiki1.all_tags=(["tag1","tag2","tag3","tag4"])
+        @wiki1.save
+        expect( @wiki1.all_tags.split(",")  ).to match_array(["tag1","tag2","tag3","tag4"])
 
-        expect( @wiki.all_tags ).to eq "tag1, tag2 tag3"
-        expect( @wiki.tags.first.name ).to eq "tag1"
-        expect( @wiki.tags.last.name ).to eq "tag2 tag3"
+        $redis.del(@wiki1.id)
 
     end
 
   end
 
-  describe "search tags & title" do
+  describe "search tags" do
 
     before do
-        @wiki1 = create(:wiki, title: "Wiki 1")
-        @wiki2 = create(:wiki, title: "Wiki 2")
-        @wiki3 = create(:wiki, title: "Wiki 3")
-        @wiki2.all_tags = "tag23" 
-        @wiki3.all_tags = "tag23" 
+        @wiki1 = build(:wiki)
+        allow(@wiki1).to receive(:set_tags)
+        @wiki1.save
+        @wiki2 = build(:wiki)
+        @wiki2.all_tags=(["tag23"]) 
+        @wiki2.save
+        @wiki3 = build(:wiki)
+        @wiki3.all_tags=(["tag23"]) 
+        @wiki3.save
     end
 
  
-      it "will retrieve wikis according to search term" do
-
-        @wikis = Wiki.search("Wiki 1")
-        expect( @wikis ).to include(@wiki1) 
-        expect( @wikis ).not_to include(@wiki2)
-        expect( @wikis ).not_to include(@wiki3)
+      it "will retrieve wikis according to tag" do
         
         @wikis = Wiki.search("tag23")
         expect( @wikis ).not_to include(@wiki1) 

@@ -1,15 +1,19 @@
 class Wiki < ActiveRecord::Base
+
+  attr_writer :all_tags
+
   belongs_to :user
   has_many :users, through: :collaborations, dependent: :destroy
   has_many :collaborations, dependent: :destroy
 
-  has_many :taggings, dependent: :destroy
-  has_many :tags, through: :taggings, dependent: :destroy
+  # has_many :taggings, dependent: :destroy
+  # has_many :tags, through: :taggings, dependent: :destroy
 
   validates :title, length: {minimum: 5}, presence: true
   validates :body, length: {minimum: 20}, presence: true
   validates :user, presence: true
 
+  after_save :set_tags
   after_create :update_collaboration
 
   extend FriendlyId
@@ -23,6 +27,7 @@ class Wiki < ActiveRecord::Base
   default_scope { order('created_at DESC') }
   scope :public_wikis, -> { where(private: false) }
 
+  # Simple methods
   def public?
     private == false
   end
@@ -31,24 +36,43 @@ class Wiki < ActiveRecord::Base
     users - [user]
   end
 
-  def all_tags=(names)
-    self.tags = names.split(",").map do |name|
-      Tag.where(name: name.strip).first_or_create!
+  # Tags
+  def set_tags
+    current_tags = self.all_tags.split(",")
+    new_tags = @all_tags.split(",").each do |tag|
+      $redis.pipelined do
+        $redis.sadd(self.id,tag)
+        $redis.sadd(tag,self.id)
+      end
+    end
+    @diff_tags = current_tags - new_tags
+    unless @diff_tags.empty?
+      @diff_tags.each do |diff|
+        $redis.pipelined do
+          $redis.srem(diff,self.id)
+          $redis.srem(self.id,diff)
+        end
+      end
     end
   end
 
   def all_tags
-    self.tags.map(&:name).join(", ")
+    $redis.smembers(self.id).join(",")
   end
 
   def self.search(search)
     if search
-      self.joins('LEFT OUTER JOIN "taggings" ON "taggings"."wiki_id" = "wikis"."id" LEFT OUTER JOIN "tags" ON "tags"."id" = "taggings"."tag_id"').uniq.where('tags.name LIKE ? OR wikis.title LIKE ?', "%#{search}%", "%#{search}%")
+      if search == ""
+        all 
+      else
+        Wiki.where(id: $redis.smembers(search))
+      end
     else
       all
     end
   end
 
+  # Private methods
   private
 
   def update_collaboration
