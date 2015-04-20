@@ -43,7 +43,9 @@ gem 'redcarpet'
 gem 'epic-editor-rails'
 gem 'friendly_id'
 gem 'will_paginate', '~> 3.0.5'
-gem 'redis'
+gem 'redis', '~> 2.2.2'
+gem 'redis_tags'
+gem 'jquery-ui-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

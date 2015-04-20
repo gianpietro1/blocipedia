@@ -99,28 +99,44 @@ context "when using self method" do
 
   describe "all_tags setter & getter" do
  
-      it "will set and tags for current wiki" do
-
+    before do
         @wiki1 = build(:wiki)
-        @wiki1.all_tags=(["tag1","tag2","tag3"]) 
+    end      
+
+      xit "will set tags" do
+
+        @wiki1.all_tags="tag1","tag2","tag3"
         @wiki1.save
         expect( @wiki1.all_tags.split(",") ).to match_array(["tag1","tag2","tag3"])
 
-        @wiki1.all_tags=(["tag1","tag2"]) 
+      end
+
+      xit "will remove 1 tag" do
+
+        @wiki1.all_tags="tag1","tag2"
         @wiki1.save
         expect( @wiki1.all_tags.split(",") ).to match_array(["tag1","tag2"])
 
-        @wiki1.all_tags=([])
+      end
+
+      xit "will remove all tags" do
+
+        @wiki1.all_tags=''
         @wiki1.save
         expect( @wiki.all_tags.split(",")  ).to match_array([])
 
-        @wiki1.all_tags=(["tag1","tag2","tag3","tag4"])
+      end 
+
+      xit "will add four tags" do
+
+        @wiki1.all_tags="tag1","tag2","tag3","tag4"
         @wiki1.save
-        expect( @wiki1.all_tags.split(",")  ).to match_array(["tag1","tag2","tag3","tag4"])
+        expect( @wiki1.all_tags.split(",")  ).to match_array(["tag1","tag2","tag3","tag4"])        
+        $redis.del("wiki-#{@wiki1.id}")
 
-        $redis.del(@wiki1.id)
+      end
 
-    end
+      
 
   end
 
@@ -131,10 +147,10 @@ context "when using self method" do
         allow(@wiki1).to receive(:set_tags)
         @wiki1.save
         @wiki2 = build(:wiki)
-        @wiki2.all_tags=(["tag23"]) 
+        @wiki2.all_tags="tag23"
         @wiki2.save
         @wiki3 = build(:wiki)
-        @wiki3.all_tags=(["tag23"]) 
+        @wiki3.all_tags="tag23"
         @wiki3.save
     end
 

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   resources :downgrades, only: [:new, :create]
 
+  match '/search_suggestions', to: 'search_suggestions#index', via: :get
+  
   devise_for :users
   root 'welcome#index'
 

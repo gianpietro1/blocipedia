@@ -8,15 +8,17 @@ class CollaborationsController < ApplicationController
 
   def create
     @wiki = Wiki.friendly.find(params[:wiki_id])
-    if params[:user_ids]
-      flash[:notice] = "Collaborators where updated."
-      params[:user_ids].each do |user_id|
-          @collaboration = @wiki.collaborations.create(user_id: user_id)        
-      end
+    @user = User.find_by_name(params[:search])
+    if @wiki.users.include? @user 
+      flash[:alert] = "User is already collaborating."
+      redirect_to wiki_collaborations_path(@wiki)
+    elsif @user == nil
+      flash[:alert] = "User name does not exist."
       redirect_to wiki_collaborations_path(@wiki)
     else
-      flash[:warning] = "No collaborators where added."
-      redirect_to @wiki
+      flash[:notice] = "Collaborators where updated."
+        @collaboration = @wiki.collaborations.create(user_id: @user.id )           
+      redirect_to wiki_collaborations_path(@wiki)
     end
   end
 

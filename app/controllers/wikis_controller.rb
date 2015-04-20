@@ -63,9 +63,9 @@ class WikisController < ApplicationController
       
       # Remove all tags from redis database
       @wiki.all_tags.split(",").each do |tag|
-        $redis.srem(tag,@wiki.id)
+        $redis.srem("tag-#{tag}",@wiki.id)
       end
-      $redis.del(@wiki.id)
+      $redis.del("wiki-#{@wiki.id}")
       
       flash[:notice] = "Wiki was deleted successfully."
       redirect_to wikis_path
