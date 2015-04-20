@@ -32,6 +32,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       ## Customization
       t.string :name
+      t.string :username
 
       t.timestamps
     end
