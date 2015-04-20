@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   has_many :wikis, through: :collaborations, dependent: :destroy
   has_many :collaborations, dependent: :destroy
-  
+
   uses_redis_tags :engine => $redis
 
   after_save :save_tags
